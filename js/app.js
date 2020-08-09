@@ -40,7 +40,8 @@ $(document).ready(function() {
               CKEY = 67,
               ENTERKEY = 13,
               SKEY = 83,
-              LKEY = 76;
+              LKEY = 76
+              TKEY = 84;
         
         window.addEventListener('keydown', function(e) {
             if($('#save-map-modal').is(':visible') ||
@@ -51,6 +52,7 @@ $(document).ready(function() {
             e.preventDefault();
             e.stopPropagation();
             const key = e.keyCode || e.which;
+            console.log(key);
             switch(key) {
                 case CURSORKEY_UP:
                     mapContainer.move('up');
@@ -77,6 +79,8 @@ $(document).ready(function() {
                     $('#save-map-modal .map-name').val(mapContainer.mapName || '');
                     $('#save-map-modal').modal();
                     break;
+                case TKEY:
+                    $('#load-textureatlas-modal').modal();
             }
         });
 
@@ -129,6 +133,60 @@ $(document).ready(function() {
         // Auto focus the Name input field when Load Map and Save Map modals are shown
         $('#load-map-modal, #save-map-modal').on('shown.bs.modal', function() {
             $(this).find('.map-name').focus();
+        });
+
+        // Load texture atlas when user clicks the Load button in the Load textureatlas modal
+        $('#load-textureatlas-modal .load-btn').on('click', function() {
+            let formData = new FormData();
+            formData.set('textureatlas', document.querySelector('#textureatlas-file'.files[0]));
+            formData.set('textureatlasImage', document.querySelector('#textureatlas-image-file').files[0]);
+            $.ajax({
+                url: './api/textureatlas/',
+                type: 'POST',
+                enctype: 'multipart/form-data',
+                data: formData_o,
+                async: true,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    
+                },
+                failure: function(response) {
+
+                }
+            });
+
+
+
+            // if(document.querySelector("#textureatlas-file").files.length === 0) {
+            //     alert('Error: No file selected');
+            //     return;
+            // }
+            // let file = document.querySelector("#textureatlas-file").files[0];
+            // if(file.type !== 'application/json') {
+            //     alert('Error: Invalid file type');
+            //     return;
+            // }
+            // let fileReader = new FileReader();
+            // fileReader.addEventListener('loadstart', function() {
+            //     console.log('File reading started');
+            // });
+            // fileReader.addEventListener('load', function(e) {
+            //     // contents of file in variable     
+            //     let textureatlas = e.target.result;
+            //     console.log(text);
+            // });
+            // fileReader.addEventListener('error', function() {
+            //     alert('Error : Failed to read file');
+            // });
+            // fileReader.addEventListener('progress', function(e) {
+            //     if(e.lengthComputable == true) {
+            //         var percent_read = Math.floor((e.loaded/e.total)*100);
+            //         console.log(percent_read + '% read');
+            //     }
+            // });
+            // fileReader.readAsText(file);
         });
     }
     
