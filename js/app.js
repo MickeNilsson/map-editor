@@ -138,7 +138,7 @@ $(document).ready(function() {
         // Load texture atlas when user clicks the Load button in the Load textureatlas modal
         $('#load-textureatlas-modal .load-btn').on('click', function() {
             let formData = new FormData();
-            formData.set('textureatlas', document.querySelector('#textureatlas-file'.files[0]));
+            formData.set('textureatlas', document.querySelector('#textureatlas-file').files[0]);
             formData.set('textureatlasImage', document.querySelector('#textureatlas-image-file').files[0]);
             $.ajax({
                 url: './api/textureatlas/',
