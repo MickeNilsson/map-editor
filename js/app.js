@@ -144,7 +144,7 @@ $(document).ready(function() {
                 url: './api/textureatlas/',
                 type: 'POST',
                 enctype: 'multipart/form-data',
-                data: formData_o,
+                data: formData,
                 async: true,
                 cache: false,
                 contentType: false,
